@@ -61,4 +61,14 @@ public class JpaArtikelRepositoryTest
         assertThat(artikel.getId()).isPositive();
         assertThat(super.countRowsInTableWhere(ARTIKELS, "id=" + artikel.getId())).isOne();
     }
+
+    @Test
+    public void findByNameContains(){
+        assertThat(repository.findByNameContains("es"))
+                .hasSize(super.jdbcTemplate.queryForObject(
+                        "select count(*) from artikels where naam like '%es%'", Integer.class))
+                .extracting(artikel -> artikel.getNaam().toLowerCase())
+                .allSatisfy(naam -> assertThat(naam).contains("es"))
+                .isSorted();
+    }
 }
