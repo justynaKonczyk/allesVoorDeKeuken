@@ -8,4 +8,11 @@ http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd" version="2.1">
             select a from Artikel a where a.naam like :if order by a.naam
         </query>
     </named-query>
+    
+    <named-query name="Artikel.increasePrice">
+        <query>
+            update Artikel a
+            set a.verkoopprijs = a.verkoopprijs * :factor
+        </query>
+    </named-query>
 </entity-mappings>
