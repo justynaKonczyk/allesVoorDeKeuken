@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -117,6 +118,18 @@ public class JpaArtikelRepositoryTest
         assertThat(repository.findById(idVanTestFoodArtikel()).get()
                 .getArtikelGroep().getNaam()).isEqualTo("test");
 
+    }
+
+    @Test
+    public void findbyNameContains(){
+        List<Artikel> artikels = repository.findByNameContains("es");
+        manager.clear();
+        assertThat(artikels)
+                .hasSize(super.jdbcTemplate.queryForObject(
+                        "select count(*) from artikels where naam like %es%", Integer.class))
+        .extracting(artikel -> artikel.getNaam().toLowerCase())
+                .allSatisfy(artikel -> assertThat(artikel).contains("es")).isSorted();
+        assertThat(artikels).extracting(artikel -> artikel.getArtikelGroep().getNaam());
     }
 
 //    @Test

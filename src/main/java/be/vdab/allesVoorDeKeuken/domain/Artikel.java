@@ -14,10 +14,11 @@ import java.util.Set;
 @NamedQuery(name = "Artikel.findByNameContains",
             query ="select a from Artikel a where a.naam like :if order by a.naam")
 @DiscriminatorColumn(name = "soort")
+@NamedEntityGraph(name = Artikel.MET_ARTIKELGROEP, attributeNodes = @NamedEntityGraph("artikelGroep"))
 public abstract class Artikel implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    public static final String MET_ARTIKELGROEP = "Artikel.metArtikelGroep";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
