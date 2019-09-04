@@ -11,10 +11,11 @@ import java.util.Set;
 @Entity
 @Table(name = "artikels")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@NamedQuery(name = "Artikel.findByNameContains",
+@NamedQuery(name = "Artikel.findByNaamContains",
             query ="select a from Artikel a where a.naam like :if order by a.naam")
 @DiscriminatorColumn(name = "soort")
-@NamedEntityGraph(name = Artikel.MET_ARTIKELGROEP, attributeNodes = @NamedEntityGraph("artikelGroep"))
+@NamedEntityGraph(name = Artikel.MET_ARTIKELGROEP,
+        attributeNodes = @NamedAttributeNode("artikelGroep"))
 public abstract class Artikel implements Serializable {
 
     private static final long serialVersionUID = 1L;

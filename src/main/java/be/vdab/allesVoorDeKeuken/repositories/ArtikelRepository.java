@@ -10,7 +10,7 @@ public interface ArtikelRepository {
 
     Optional<Artikel> findById(long id);
     void add(Artikel artikel);
-    List<Artikel> findByNameContains(String woord);
+    List<Artikel> findByNaamContains(String woord);
     int increasePrice(BigDecimal percentage);
 
 }

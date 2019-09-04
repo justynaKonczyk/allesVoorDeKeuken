@@ -99,7 +99,7 @@ public class JpaArtikelRepositoryTest
 
     @Test
     public void findByNameContains() {
-        assertThat(repository.findByNameContains("es"))
+        assertThat(repository.findByNaamContains("es"))
                 .hasSize(super.jdbcTemplate.queryForObject(
                         "select count(*) from artikels where naam like '%es%'", Integer.class))
                 .extracting(artikel -> artikel.getNaam().toLowerCase())
@@ -122,11 +122,11 @@ public class JpaArtikelRepositoryTest
 
     @Test
     public void findbyNameContains(){
-        List<Artikel> artikels = repository.findByNameContains("es");
+        List<Artikel> artikels = repository.findByNaamContains("es");
         manager.clear();
         assertThat(artikels)
                 .hasSize(super.jdbcTemplate.queryForObject(
-                        "select count(*) from artikels where naam like %es%", Integer.class))
+                        "select count(*) from artikels where naam like '%es%'", Integer.class))
         .extracting(artikel -> artikel.getNaam().toLowerCase())
                 .allSatisfy(artikel -> assertThat(artikel).contains("es")).isSorted();
         assertThat(artikels).extracting(artikel -> artikel.getArtikelGroep().getNaam());
